@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +21,13 @@ class Produit
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Licence", inversedBy="produits")
+     */
+    private $idLicence;
+
 
     /**
      * @var string|null
@@ -98,6 +106,31 @@ class Produit
     public function setStock(?string $stock): self
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Licence[]
+     */
+    public function getIdLicence(): ?Collection
+    {
+        return $this->idLicence;
+    }
+
+    public function setIdLicence(?Collection $idLicence): self
+    {
+        $this->idLicence = $idLicence;
+
+        return $this;
+    }
+
+    public function removeIdLicence(Licence $licence): self
+    {
+        if ($this->idLicence->contains($licence)) {
+            $this->idLicence->removeElement($licence);
+            $licence->removeProduit($this);
+        }
 
         return $this;
     }
