@@ -29,6 +29,13 @@ class Produit
     private $idLicence;
 
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Marque", inversedBy="produits")
+     */
+    private $idMarque;
+
+
     /**
      * @var string|null
      *
@@ -42,6 +49,13 @@ class Produit
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="taille", type="string", length=255, nullable=true)
+     */
+    private $taille;
 
     /**
      * @var string|null
@@ -65,6 +79,22 @@ class Produit
     public function getLibelle(): ?string
     {
         return $this->libelle;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTaille(): ?string
+    {
+        return $this->taille;
+    }
+
+    /**
+     * @param string|null $taille
+     */
+    public function setTaille(?string $taille): void
+    {
+        $this->taille = $taille;
     }
 
     public function setLibelle(?string $libelle): self
@@ -135,5 +165,29 @@ class Produit
         return $this;
     }
 
+    /**
+     * @return Collection|Marque[]
+     */
+    public function getIdMarque(): ?Collection
+    {
+        return $this->idMarque;
+    }
+
+    public function setIdMarque(?Collection $idMarque): self
+    {
+        $this->idMarque = $idMarque;
+
+        return $this;
+    }
+
+    public function removeIdMarque(Marque $marque): self
+    {
+        if ($this->idMarque->contains($marque)) {
+            $this->idMarque->removeElement($marque);
+            $marque->removeProduit($this);
+        }
+
+        return $this;
+    }
 
 }

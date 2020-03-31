@@ -32,7 +32,7 @@ class Marque
     private $libelle;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", inversedBy="Marques")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", inversedBy="marques")
      */
     private $idProduit;
 
@@ -82,5 +82,6 @@ class Marque
 
         return $this;
     }
+
 }
 

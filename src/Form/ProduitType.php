@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Licence;
+use App\Entity\Marque;
 use App\Entity\Produit;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,8 +17,22 @@ class ProduitType extends AbstractType
         $builder
             ->add('libelle')
             ->add('description')
+            ->add('taille')
             ->add('prixht')
             ->add('stock')
+            ->add('idLicence', EntityType::class, [
+                'required' => false,
+                'label' => false,
+                'class' => Licence::class,
+                'multiple' => true
+            ])
+            ->add('idMarque', EntityType::class, [
+                'required' => false,
+                'label' => false,
+                'class' => Marque::class,
+                'multiple' => true
+            ])
+
         ;
     }
 
