@@ -1,0 +1,21 @@
+<div class="content">
+    <div class="row">
+        <div class="bg-light m-2 p-3" style="border-radius:10px;">
+            <div class="text-center">
+                {% if produit.filename %}
+                    <img src="{{ vich_uploader_asset(produit, 'imageFile')}}" class="card-img-top" style="width: 100%; height:auto;" />
+                {% else %}
+                    <img src="{{ '/images/produits/db.jpg' }}" class="card-img-top" style="width: 100%; height:auto;" />
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{{ path('produit.show', {id: produit.id, slug: produit.slug}) }}">{{ produit.libelle }}</a>
+                        <p>{{ produit.description }}</p>
+                        <p style="font-weight: bold; font-size : 2rem;">{{ produit.prixht }} $</p>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>

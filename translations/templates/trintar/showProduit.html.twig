@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'TRINTAR - page produit' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                </div>
+                <div class="col-md-4">
+                    <h1>{{ produit.libelle }}</h1>
+                    <div class="text-primary" style="font-size : 4rem; font-weight: bold;">{{ produit.prixht }} $</div>
+                    <a href="#" class="btn btn-primary">Contacter la boutique</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container margin-top : 4;">
+        <p>
+            {{ produit.description | nl2br }}
+        </p>
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Caracteristiques</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <td>ID</td>
+                        <td>{{ produit.id }}</td>
+                    </tr>
+                    <tr>
+                        <td>NOM</td>
+                        <td>{{ produit.libelle }}</td>
+                    </tr>
+                    <tr>
+                        <td>DESCRIPTION</td>
+                        <td>{{ produit.description }}</td>
+                    </tr>
+                    <tr>
+                        <td>PRIX</td>
+                        <td>{{ produit.prixht }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h2>Spécificités</h2>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
