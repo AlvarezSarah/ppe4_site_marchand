@@ -2,96 +2,89 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
+use App\Notification\ContactNotification;
 use App\Entity\Magasin;
-use App\Form\MagasinType;
+use App\Entity\MagasinSearch;
+use App\Form\ContactType;
+use App\Form\MagasinSearchType;
+use App\Repository\MagasinRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
-/**
- * @Route("/magasin")
- */
+
 class MagasinController extends AbstractController
 {
     /**
-     * @Route("/", name="magasin_index", methods={"GET"})
+     * @var EntityManagerInterface
      */
-    public function index(): Response
-    {
-        $magasins = $this->getDoctrine()
-            ->getRepository(Magasin::class)
-            ->findAll();
 
-        return $this->render('magasin/index.html.twig', [
-            'magasins' => $magasins,
-        ]);
+    private $em;
+
+
+    /**
+     * @var MagasinRepository
+     */
+
+    private $Mrepository;
+
+    public function __construct(MagasinRepository $Mrepository, EntityManagerInterface $em)
+    {
+        $this->Mrepository = $Mrepository;
+        $this->em = $em;
     }
 
     /**
-     * @Route("/new", name="magasin_new", methods={"GET","POST"})
+     * @Route("/magasins", name="magasin", methods={"GET"})
+     * @param MagasinRepository $Mrepository
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function index(PaginatorInterface $paginator,MagasinRepository $Mrepository, Request $request): Response
     {
-        $magasin = new Magasin();
-        $form = $this->createForm(MagasinType::class, $magasin);
+        $search = new MagasinSearch();
+        $form = $this->createForm(MagasinSearchType::class, $search);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($magasin);
-            $entityManager->flush();
+        $magasin = $paginator->paginate(
+            $this->Mrepository->findAllVisibleQuery($search),
+            $request->query->getInt('page', 1),
+            9
+        );
 
-            return $this->redirectToRoute('magasin_index');
-        }
-
-        return $this->render('magasin/new.html.twig', [
-            'magasin' => $magasin,
-            'form' => $form->createView(),
+        return $this->render('site/magasin.html.twig', [
+            'current_menu' => 'magasins',
+            'magasins' => $magasin,
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/{id}", name="magasin_show", methods={"GET"})
+     * @Route ("/magasins/{slug}-{id}", name="magasin.show", requirements={"slug": "[a-z0-9\-]*"})
+     * @return Response
+     * @param Magasin $magasin
      */
-    public function show(Magasin $magasin): Response
+
+    public function show(Magasin $magasin, string $slug, Request $request): Response
     {
-        return $this->render('magasin/show.html.twig', [
+        if ($magasin->getSlug() !== $slug){
+            return $this->redirectToRoute('magasin.show', [
+                'id' => $magasin->getId(),
+                'slug' => $magasin->getSlug()
+            ], 301);
+        }
+
+
+        return $this->render('site/showMagasin.html.twig', [
             'magasin' => $magasin,
+            'current_menu' => 'magasins',
+
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="magasin_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Magasin $magasin): Response
-    {
-        $form = $this->createForm(MagasinType::class, $magasin);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('magasin_index');
-        }
-
-        return $this->render('magasin/edit.html.twig', [
-            'magasin' => $magasin,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="magasin_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Magasin $magasin): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$magasin->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($magasin);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('magasin_index');
-    }
 }
+
+

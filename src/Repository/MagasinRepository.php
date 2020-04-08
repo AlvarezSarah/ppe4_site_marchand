@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Magasin;
+use App\Entity\MagasinSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Magasin|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +22,39 @@ class MagasinRepository extends ServiceEntityRepository
         parent::__construct($registry, Magasin::class);
     }
 
-    // /**
-    //  * @return Magasin[] Returns an array of Magasin objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    /**
+     * @return Magasin[]
+     */
 
-    /*
-    public function findOneBySomeField($value): ?Magasin
+    public function findLatest(): array
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->findVisibleQuery()
+            ->setMaxResults(3)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
+    private function findVisibleQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('m');
+    }
+
+    /**
+     * @return Query
+     */
+
+    public function findAllVisibleQuery(MagasinSearch $search): Query
+    {
+        $query =  $this->findVisibleQuery();
+
+        if ($search->getNom()){
+            $query = $query
+                ->andWhere('m.nom = :nom')
+                ->setParameter('nom', $search->getNom());
+        }
+
+        return $query->getQuery();
+    }
 }
+
+

@@ -3,9 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Magasin;
+use App\Entity\optionMagasin;
+use App\Entity\Produit;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+
 
 class MagasinType extends AbstractType
 {
@@ -13,8 +19,13 @@ class MagasinType extends AbstractType
     {
         $builder
             ->add('horaireOuverture')
-            ->add('longitude')
-            ->add('latitude')
+            ->add('adresse')
+            ->add('lng', HiddenType::class)
+            ->add('lat', HiddenType::class)
+            ->add('codePostal')
+            ->add('ville')
+            ->add('departement')
+            ->add('pays')
             ->add('nom')
             ->add('telephone')
             ->add('courriel')
@@ -29,3 +40,5 @@ class MagasinType extends AbstractType
         ]);
     }
 }
+
+

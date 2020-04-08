@@ -3,95 +3,81 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
-use App\Form\ProduitType;
+use App\Entity\ProduitSearch;
+use App\Form\ProduitSearchType;
+use App\Repository\ProduitRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
-/**
- * @Route("/produit")
- */
+
 class ProduitController extends AbstractController
 {
     /**
-     * @Route("/", name="produit_index", methods={"GET"})
+     * @var EntityManagerInterface
      */
-    public function index(): Response
-    {
-        $produits = $this->getDoctrine()
-            ->getRepository(Produit::class)
-            ->findAll();
 
-        return $this->render('produit/index.html.twig', [
+    private $em;
+
+
+    /**
+     * @var ProduitRepository
+     */
+
+    private $Prepository;
+
+    public function __construct(ProduitRepository $Prepository, EntityManagerInterface $em)
+    {
+        $this->Prepository = $Prepository;
+        $this->em = $em;
+    }
+
+    /**
+     * @Route("/produits", name="produit_index", methods={"GET"})
+     * @param ProduitRepository $Prepository
+     * @return Response
+     */
+    public function index(PaginatorInterface $paginator,ProduitRepository $Prepository, Request $request): Response
+    {
+        $search = new ProduitSearch();
+        $form = $this->createForm(ProduitSearchType::class, $search);
+        $form->handleRequest($request);
+
+        $produits = $paginator->paginate(
+            $this->Prepository->findAllVisibleQuery($search),
+            $request->query->getInt('page', 1),
+            9
+        );
+
+        return $this->render('site/produit.html.twig', [
+            'current_menu' => 'produits',
             'produits' => $produits,
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/new", name="produit_new", methods={"GET","POST"})
+     * @Route ("/biens/{slug}-{id}", name="produit.show", requirements={"slug": "[a-z0-9\-]*"})
+     * @return Response
+     * @param Produit $produit
      */
-    public function new(Request $request): Response
+
+    public function show(Produit $produit, string $slug): Response
     {
-        $produit = new Produit();
-        $form = $this->createForm(ProduitType::class, $produit);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($produit);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('produit_index');
+        if ($produit->getSlug() !== $slug){
+            return $this->redirectToRoute('property.show', [
+                'id' => $produit->getId(),
+                'slug' => $produit->getSlug()
+            ], 301);
         }
-
-        return $this->render('produit/new.html.twig', [
+        return $this->render('site/showProduit.html.twig', [
             'produit' => $produit,
-            'form' => $form->createView(),
+            'current_menu' => 'produits'
         ]);
-    }
-
-    /**
-     * @Route("/{id}", name="produit_show", methods={"GET"})
-     */
-    public function show(Produit $produit): Response
-    {
-        return $this->render('produit/show.html.twig', [
-            'produit' => $produit,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="produit_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Produit $produit): Response
-    {
-        $form = $this->createForm(ProduitType::class, $produit);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('produit_index');
-        }
-
-        return $this->render('produit/edit.html.twig', [
-            'produit' => $produit,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="produit_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Produit $produit): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($produit);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('produit_index');
     }
 }
+
+

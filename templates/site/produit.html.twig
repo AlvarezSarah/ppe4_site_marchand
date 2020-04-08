@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Produits' %}
+
+{% block body %}
+    <br>
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="form-row">
+            <div class="col-md-3">
+                {{ form_row(form.licences) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.libelle) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.marques) }}
+            </div>
+            &nbsp;
+            <div class="col-md-3">
+                <button class="btn btn-primary">Rechercher</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                {% for produit in produits %}
+                    <div class="col-md-4">
+                        {% include 'site/_produit.html.twig' %}
+                    </div>
+                {% endfor %}
+            </div>
+            <br>
+            <div class="pagination">
+                {{ knp_pagination_render(produits) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

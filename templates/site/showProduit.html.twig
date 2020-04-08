@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Page produit' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+{#                    {% if produit.filename %}#}
+{#                        <img src="../images/produits/{{ produit.filename }}" alt="Symfony!" style="width: 100%; height:auto;">#}
+{#                    {% else %}#}
+{#                        <img src="{{ '../images/produits/db.jpg' }}" alt="Symfony!" class="image-display" style="width: 100%; height:auto;" />#}
+{#                    {% endif %}#}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="container">
+            {% for licence in produit.idLicence %}
+                <div class="row">
+                    <strong>Licence :&nbsp;</strong> {{ licence.libelle | nl2br }}
+                </div>
+            {% endfor %}
+            <br>
+            {% for marque in produit.idMarque %}
+                <div class="row">
+                    <strong>Marque :&nbsp;</strong> {{ marque.libelle | nl2br }}
+                </div>
+            {% endfor %}
+            <br>
+            <div class="row">
+                <strong>Prix de la figurine :&nbsp;</strong> {{ produit.prixht | nl2br }} euros
+            </div>
+            <br>
+            <div class="row">
+                <strong>Stock disponible :&nbsp;</strong> {{ produit.stock | nl2br }}
+            </div>
+            <br>
+            <div class="row">
+                <strong>Description :</strong> {{ produit.description | nl2br }}
+            </div>
+            <br>
+            <div class="row">
+                <strong>Magasin(s) disposant de cet/ces article(s) :&nbsp;</strong>
+{#                {% for magasin in produit.idMagasin %}#}
+{#                    <a href="{{ path('show_magasin', {id: magasin.id, slug: magasin.slug}) }}">{{ magasin.nom | nl2br }}</a>,#}
+{#                {% endfor %}#}
+            </div>
+            <br>
+        </div>
+    </div>
+    <br>
+    <div class="jumbotron">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <a href="{{ path ('produit_index')}}" class="btn btn-primary">Revenir à la page produit</a>
+                </div>
+                <div class="col-md-3">
+                    <a href="" class="btn btn-secondary">Commander cette figurine</a>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
