@@ -7,11 +7,11 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-{#                    {% if produit.filename %}#}
-{#                        <img src="../images/produits/{{ produit.filename }}" alt="Symfony!" style="width: 100%; height:auto;">#}
-{#                    {% else %}#}
-{#                        <img src="{{ '../images/produits/db.jpg' }}" alt="Symfony!" class="image-display" style="width: 100%; height:auto;" />#}
-{#                    {% endif %}#}
+                    {% if produit.filename %}
+                        <img src="../images/produits/{{ produit.filename }}" alt="Symfony!" style="width: 100%; height:auto;">
+                    {% else %}
+                        <img src="{{ '../images/produits/image_de_bases.png' }}" alt="Symfony!" class="image-display" style="width: 100%; height:auto;" />
+                    {% endif %}
                 </div>
             </div>
         </div>

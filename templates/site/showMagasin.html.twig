@@ -1,45 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'TRINTAR - page magasin' %}
+{% block title 'Page Magasin' %}
 
 {% block body %}
     <div class="jumbotron">
         <div class="container">
             <div class="row">
-{#                <div class="col">#}
-{#                    {% if magasin.filename %}#}
-{#                        <img src="../images/magasins/{{ magasin.filename }}" alt="Symfony!" style="width: 100%; height:auto;">#}
-{#                    {% else %}#}
-{#                        <img src="{{ '../images/magasins/db.jpg' }}" alt="Symfony!" class="image-display" style="width: 100%; height:auto;" />#}
-{#                    {% endif %}#}
-{#                </div>#}
+                <div class="col">
+                    {% if magasin.filename %}
+                        <img src="../images/magasins/{{ magasin.filename }}" alt="Symfony!" style="width: 100%; height:auto;">
+                    {% else %}
+                        <img src="{{ '../images/magasins/image_de_bases.png' }}" alt="Symfony!" class="image-display" style="width: 100%; height:auto;" />
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
     <div class="jumbotron">
         <div class="container">
             <div class="row">
-                <strong>Intitulé :&nbsp;</strong><br> {{ magasin.nom | nl2br }}
+                <strong>Intitulé :&nbsp;</strong> {{ magasin.nom | nl2br }}
             </div>
             <br>
             <div class="row">
-                <strong>Adresse :&nbsp;</strong><br> {{ magasin.adresse | nl2br }}, {{ magasin.codePostal | nl2br }}, {{ magasin.ville | nl2br }}
+                <strong>Adresse :&nbsp;</strong> {{ magasin.adresse | nl2br }}, {{ magasin.codePostal | nl2br }}, {{ magasin.ville | nl2br }}
             </div>
             <br>
             <div class="row">
-                <strong>Département :&nbsp;</strong><br> {{ magasin.departement | nl2br }}
+                <strong>Département :&nbsp;</strong> {{ magasin.departement | nl2br }}
             </div>
             <br>
             <div class="row">
-                <strong>Pays :&nbsp;</strong><br> {{ magasin.pays | nl2br }}
+                <strong>Pays :&nbsp;</strong> {{ magasin.pays | nl2br }}
             </div>
             <br>
             <div class="row">
-                <strong>Téléphone :&nbsp;</strong><br> {{ magasin.telephone | nl2br }}
+                <strong>Téléphone :&nbsp;</strong> {{ magasin.telephone | nl2br }}
             </div>
             <br>
             <div class="row">
-                <strong>Courriel :&nbsp;</strong><br> {{ magasin.courriel | nl2br }}
+                <strong>Courriel :&nbsp;</strong> {{ magasin.courriel | nl2br }}
             </div>
             <br>
 {#            <div class="row">#}

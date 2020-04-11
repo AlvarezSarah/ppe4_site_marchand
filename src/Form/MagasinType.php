@@ -29,6 +29,10 @@ class MagasinType extends AbstractType
             ->add('nom')
             ->add('telephone')
             ->add('courriel')
+            ->add('imageFile', FileType::class, [
+                'required' => false
+            ])
+
 
         ;
     }

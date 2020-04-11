@@ -7,6 +7,7 @@ use App\Entity\Marque;
 use App\Entity\Produit;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -32,6 +33,10 @@ class ProduitType extends AbstractType
                 'class' => Marque::class,
                 'multiple' => true
             ])
+            ->add('imageFile', FileType::class, [
+                'required' => false
+            ])
+
 
         ;
     }
