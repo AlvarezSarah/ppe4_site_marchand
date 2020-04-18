@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Page Magasin' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    {% if magasin.filename %}
+                        <img src="../images/magasins/{{ magasin.filename }}" alt="Symfony!" style="width: 100%; height:auto;">
+                    {% else %}
+                        <img src="{{ '../images/magasins/image_de_bases.png' }}" alt="Symfony!" class="image-display" style="width: 100%; height:auto;" />
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <strong>Intitulé :&nbsp;</strong> {{ magasin.nom | nl2br }}
+            </div>
+            <br>
+            <div class="row">
+                <strong>Adresse :&nbsp;</strong> {{ magasin.adresse | nl2br }}, {{ magasin.codePostal | nl2br }}, {{ magasin.ville | nl2br }}
+            </div>
+            <br>
+            <div class="row">
+                <strong>Département :&nbsp;</strong> {{ magasin.departement | nl2br }}
+            </div>
+            <br>
+            <div class="row">
+                <strong>Pays :&nbsp;</strong> {{ magasin.pays | nl2br }}
+            </div>
+            <br>
+            <div class="row">
+                <strong>Téléphone :&nbsp;</strong> {{ magasin.telephone | nl2br }}
+            </div>
+            <br>
+            <div class="row">
+                <strong>Courriel :&nbsp;</strong> {{ magasin.courriel | nl2br }}
+            </div>
+            <br>
+{#            <div class="row">#}
+{#                <strong>Option(s) du magasin :&nbsp;</strong><br>{% for optionMagasin in magasin.idOptionMagasin %} {{ optionMagasin.libelle | nl2br }},{% endfor %}#}
+{#            </div>#}
+{#            <br>#}
+{#            <div class="row">#}
+{#                <strong>Licence(s) disponible dans ce magasin :&nbsp;</strong><br>#}
+{#                {% for produit in magasin.idProduit %}#}
+{#                    <a href="{{ path('produit.show', {id: produit.id, slug: produit.slug}) }}">{{ produit.libelle | nl2br }} ({% for tomes in produit.idTomes %}{{ tomes.libelle | nl2br }},{% endfor %})</a>,#}
+{#                {% endfor %}#}
+{#            </div>#}
+            <br>
+        </div>
+    </div>
+    <br>
+
+    <div class="jumbotron">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <a href="{{ path ('magasin')}}" class="btn btn-primary">Revenir à la page produit</a>
+                </div>
+                <div class="col-md-3">
+                    <a href="" class="btn btn-secondary">Commander un produit</a>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Administration - accueil' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="text-center">
+                <h1>ADMINISTRATION DES UTILISATEURS</h1>
+            </div>
+        </div>
+        <br>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>actions</th>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Courriel</th>
+                <th>Telephone</th>
+                <th>Date de naissance</th>
+                <th>Rôle</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for utilisateur in utilisateurs %}
+                <tr>
+                    <td>
+                        <a href="{{ path('admin.utilisateur.edit', {id : utilisateur.id}) }}" class="btn btn-secondary">Editer</a>
+                        <form method="post" action="{{ path('admin.utilisateur.delete', {id: utilisateur.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr de vouloir supprimer ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                    <td>{{ utilisateur.id }}</td>
+                    <td>{{ utilisateur.nom }}</td>
+                    <td>{{ utilisateur.prenom }}</td>
+                    <td>{{ utilisateur.email }}</td>
+                    <td>{{ utilisateur.telephone }}</td>
+                    <td>{{ utilisateur.dateNaissance ? utilisateur.dateNaissance|date('Y-m-d') : '' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-right">
+            <a href="{{ path('admin.utilisateur.new') }}" class="btn btn-primary">Créer une nouvel utilisateur</a>
+        </div>
+    </div>
+{% endblock %}
+
+
