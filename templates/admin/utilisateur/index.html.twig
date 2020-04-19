@@ -45,6 +45,13 @@
                     <td>{{ utilisateur.email }}</td>
                     <td>{{ utilisateur.telephone }}</td>
                     <td>{{ utilisateur.dateNaissance ? utilisateur.dateNaissance|date('Y-m-d') : '' }}</td>
+                    {% for role in utilisateur.roles %}
+                        {% if role == "ROLE_USER" %}
+                            <td>Utilisateur</td>
+                        {% elseif role == "ROLE_ADMIN" %}
+                            <td>Administrateur</td>
+                        {% endif %}
+                    {% endfor %}
                 </tr>
             {% endfor %}
             </tbody>
