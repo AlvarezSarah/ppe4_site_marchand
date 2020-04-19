@@ -48,7 +48,10 @@
 {#                    <a href="{{ path('show_magasin', {id: magasin.id, slug: magasin.slug}) }}">{{ magasin.nom | nl2br }}</a>,#}
 {#                {% endfor %}#}
             </div>
-            <br>
+<br>
+            <div class="row">
+                <a href="{{ path ('panier.add', {'id': produit.id}) }}" style="float: left" class="btn btn-primary">Ajouter au panier</a>
+            </div>
         </div>
     </div>
     <br>
