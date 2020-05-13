@@ -5,7 +5,6 @@
         <title>{% block title %}{% endblock %}</title>
         {% block stylesheets %} <!-- Font Awesome -->
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css">
-
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
             <!-- Google Fonts -->
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
@@ -17,7 +16,7 @@
 
     <!--Navbar -->
     <nav class="mb-1  navbar navbar-expand-lg navbar-dark blue-gradient">
-        <a class="navbar-brand" href="#">FIGURINA</a>
+        <a class="navbar-brand" href="{{ path ('home') }}">FIGURINA</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
                 aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -31,9 +30,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path ('produit_index')}}">Figurines</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Produits dérivés</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path ('magasin') }}">Magasins</a>
@@ -51,9 +47,7 @@
             </ul>
             <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light">
-                        <i class="fab fa-google-plus-g"></i>
-                    </a>
+                    <a class="nav-link" href="{{ path ('panier')}}"><i class="fas fa-cart-arrow-down"></i></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
@@ -62,11 +56,36 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-default"
                          aria-labelledby="navbarDropdownMenuLink-333">
-                        <a class="dropdown-item" href="#">Profil</a>
-                        <a class="dropdown-item" href="#">Paramètre</a>
-                        <a class="dropdown-item" href="#">Déconnexion</a>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <a class="dropdown-item" href="{{ path ('user.profil')}}">PROFIL</a>
+                            <a class="dropdown-item" href="{{ path ('app_logout')}}">SE DECONNECTER</a>
+                        {% else %}
+                            <a class="dropdown-item" href="{{ path ('app_register')}}">S'INSCRIRE</a>
+                            <a class="dropdown-item" href="{{ path ('app_login')}}">SE CONNECTER</a>
+                        {% endif %}
                     </div>
                 </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-lock"></i> ADMINISTRATION
+                        </a>
+                        <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+                            <a class="dropdown-item" href="{{ path ('admin.produit.index')}}">Gestion - Produit</a>
+                            <a class="dropdown-item" href="{{ path ('admin.licence.index')}}">Gestion - Licence</a>
+                            <a class="dropdown-item" href="{{ path ('admin.marque.index')}}">Gestion - Marques</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ path ('admin.magasin.index')}}">Gestion - Magasin</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ path ('admin.utilisateur.index')}}">Gestion - Utilisateur</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ path ('admin.stat.index')}}">Statistique - Global</a>
+                        </div>
+                    </li>
+                {% endif %}
+
+
+
             </ul>
         </div>
     </nav>
@@ -225,9 +244,57 @@
     <!-- Footer -->
     {% block javascripts %}
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/places.js@1.18.1"></script>
         <script>
-            $('select').select2();
+            let inputAddress = document.querySelector('#magasin_adresse')
+            if (inputAddress !== null) {
+                let placesAutocomplete = places({
+                    appId: 'pl6ISXY48YQU',
+                    apiKey: 'fb641747843615b53358369739399724',
+                    container: inputAddress
+                })
+                placesAutocomplete.on('change', e => {
+                    document.querySelector('#magasin_ville').value = e.suggestion.city
+                    document.querySelector('#magasin_departement').value = e.suggestion.county
+                    document.querySelector('#magasin_pays').value = e.suggestion.country
+                    document.querySelector('#magasin_codePostal').value = e.suggestion.postcode
+                    document.querySelector('#magasin_lat').value = e.suggestion.latlng.lat
+                    document.querySelector('#magasin_lng').value = e.suggestion.latlng.lng
+                })
+            }</script>
+
+        <script>
+            let inputAddress2 = document.querySelector('#utilisateur_adresse')
+            if (inputAddress2 !== null) {
+            let placesAutocomplete = places({
+            appId: 'pl6ISXY48YQU',
+            apiKey: 'fb641747843615b53358369739399724',
+            container: inputAddress2
+            })
+            placesAutocomplete.on('change', e => {
+            document.querySelector('#utilisateur_ville').value = e.suggestion.city
+            document.querySelector('#utilisateur_departement').value = e.suggestion.county
+            document.querySelector('#utilisateur_pays').value = e.suggestion.country
+            document.querySelector('#utilisateur_codePostal').value = e.suggestion.postcode
+            document.querySelector('#utilisateur_lat').value = e.suggestion.latlng.lat
+            document.querySelector('#utilisateur_lng').value = e.suggestion.latlng.lng
+            })
+            }
+        </script>
+        <script>
+            let searchAddress = document.querySelector('#search_address')
+            if (searchAddress !== null) {
+                let place = places({
+                    container: searchAddress
+                })
+                place.on('change', e => {
+                    document.querySelector('#lat').value = e.suggestion.latlng.lat
+                    document.querySelector('#lng').value = e.suggestion.latlng.lng
+                })
+            }
+
+
         </script>
         <!-- JQuery -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -237,6 +304,13 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.0/js/mdb.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+        <script>
+            $('select').select2();
+        </script>
     {% endblock %}
     </body>
 </html>

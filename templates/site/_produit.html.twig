@@ -10,7 +10,7 @@
 
                 <div class="card-body">
                     <h5 class="card-title">
-                        <h3>{{ produit.libelle }}</h3>
+                        <h3><a href="{{ path('produit.show', {id: produit.id, slug: produit.slug}) }}">{{ produit.libelle }}</a></h3>
                        Licence : <a href="{{ path('produit.show', {id: produit.id, slug: produit.slug}) }}">
                             {% for licence in produit.idLicence %}
                                 {{ licence.libelle }}</a>

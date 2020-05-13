@@ -19,6 +19,17 @@ class MagasinSearchType extends AbstractType
                 'label' => false,
                 'required' => false,
             ])
+            ->add('distance', ChoiceType::class, [
+                'choices' => [
+                    '10 km' => 10,
+                    '100 km' => 100,
+                    '1000 km' => 1000
+                ]
+            ])
+            ->add('lat', HiddenType::class)
+            ->add('lng', HiddenType::class)
+
+
         ;
     }
 
@@ -34,6 +45,7 @@ class MagasinSearchType extends AbstractType
     {
         return '';
     }
+
 
 }
 

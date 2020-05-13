@@ -3,14 +3,21 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Utilisateur
  *
  * @ORM\Table(name="utilisateur", indexes={@ORM\Index(name="id_image", columns={"id_image"}), @ORM\Index(name="id_role", columns={"id_role"})})
- * @ORM\Entity(repositoryClass="App\Repository\UtilisateursRepository")
+ * @ORM\Entity
+ * @Vich\Uploadable()
  */
-class Utilisateur
+class Utilisateur implements UserInterface, \Serializable
+
 {
     /**
      * @var int
@@ -38,9 +45,17 @@ class Utilisateur
     /**
      * @var string|null
      *
-     * @ORM\Column(name="courriel", type="string", length=50, nullable=true)
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
-    private $courriel;
+    private $description;
+
+    /**
+     * @Assert\Length(min=4, max=255)
+     * @Assert\Email()
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $email;
+
 
     /**
      * @var string|null
@@ -57,31 +72,104 @@ class Utilisateur
     private $dateNaissance;
 
     /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
      * @var string|null
      *
-     * @ORM\Column(name="mot_de_passe", type="string", length=255, nullable=true)
+     * @ORM\Column(name="filename", type="string", length=255, nullable=true)
      */
-    private $motDePasse;
+    private $filename;
 
     /**
-     * @var \Image
-     *
-     * @ORM\ManyToOne(targetEntity="Image")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_image", referencedColumnName="id")
-     * })
+     * @var File|null
+     * @Assert\Image (
+     *      mimeTypes="image/jpeg")
+     * @Vich\UploadableField(mapping="utilisateur_image", fileNameProperty="filename")
      */
-    private $idImage;
+
+    private $imageFile;
 
     /**
-     * @var \Role
-     *
-     * @ORM\ManyToOne(targetEntity="Role")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_role", referencedColumnName="id")
-     * })
+     * @ORM\Column(type="datetime")
      */
-    private $idRole;
+    private $updated_at;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="float", scale=4, precision=7)
+     */
+    private $lng;
+
+    /**
+     * @ORM\Column(type="float", scale=4, precision=6)
+     */
+    private $lat;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="code_postal", type="string", length=250, nullable=true)
+     */
+    private $codePostal;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="ville", type="string", length=250, nullable=true)
+     */
+    private $ville;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="departement", type="string", length=50, nullable=true)
+     */
+    private $departement;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="pays", type="string", length=50, nullable=true)
+     */
+    private $pays;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="confirmation_token", type="string", length=50, nullable=true)
+     */
+    private $confirmationToken;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="enabled", type="string", length=50)
+     */
+    private $enabled;
+
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="created_at", type="string", nullable=true)
+     */
+    private $createdAt;
+
 
     public function getId(): ?int
     {
@@ -112,17 +200,30 @@ class Utilisateur
         return $this;
     }
 
-    public function getCourriel(): ?string
+    public function getDescription(): ?string
     {
-        return $this->courriel;
+        return $this->description;
     }
 
-    public function setCourriel(?string $courriel): self
+    public function setDescription(?string $description): self
     {
-        $this->courriel = $courriel;
+        $this->description = $description;
 
         return $this;
     }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
 
     public function getTelephone(): ?string
     {
@@ -148,41 +249,262 @@ class Utilisateur
         return $this;
     }
 
-    public function getMotDePasse(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
-        return $this->motDePasse;
+        return (string) $this->email;
     }
 
-    public function setMotDePasse(?string $motDePasse): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->motDePasse = $motDePasse;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function getIdImage(): ?Image
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
     {
-        return $this->idImage;
+        return (string) $this->password;
     }
 
-    public function setIdImage(?Image $idImage): self
+    public function setPassword(string $password): self
     {
-        $this->idImage = $idImage;
+        $this->password = $password;
 
         return $this;
     }
 
-    public function getIdRole(): ?Role
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
     {
-        return $this->idRole;
+        // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
-    public function setIdRole(?Role $idRole): self
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
     {
-        $this->idRole = $idRole;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param null|string $filename
+     * @return Utilisateur
+     */
+    public function setFilename(?string $filename): Utilisateur
+    {
+        $this->filename = $filename;
+        return $this;
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+
+
+
+    /**
+     * @param null|File $imageFile
+     * @return Utilisateur
+     */
+    public function setImageFile(?File $imageFile): Utilisateur
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize(): string
+    {
+        // add $this->salt too if you don't use Bcrypt or Argon2i
+        return serialize([$this->id, $this->email, $this->password]);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized): void
+    {
+        // add $this->salt too if you don't use Bcrypt or Argon2i
+        [$this->id, $this->email, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+
+    public function setLng(?float $lng): self
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(?float $lat): self
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?string $codePostal): self
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getDepartement(): ?string
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?string $departement): self
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    public function getPays(): ?string
+    {
+        return $this->pays;
+    }
+
+    public function setPays(?string $pays): self
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    public function getConfirmationToken(): ?string
+    {
+        return $this->confirmationToken;
+    }
+
+    public function setConfirmationToken(?string $confirmationToken): self
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    public function getEnabled(): ?string
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(?string $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?string
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(string $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+
 
 
 }
+
+

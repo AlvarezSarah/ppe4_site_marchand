@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Produit;
+
 
 /**
  * Commande
  *
  * @ORM\Table(name="commande", indexes={@ORM\Index(name="id_utilisateur", columns={"id_utilisateur"}), @ORM\Index(name="id_adresse", columns={"id_adresse"})})
- * @ORM\Entity(repositoryClass="App\Repository\CommandeRepository")
+ * @ORM\Entity
  */
 class Commande
 {
@@ -22,9 +25,9 @@ class Commande
     private $id;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      *
-     * @ORM\Column(name="date_cde", type="date", nullable=true)
+     * @ORM\Column(name="date_cde", type="string", nullable=true)
      */
     private $dateCde;
 
@@ -36,43 +39,37 @@ class Commande
     private $facturePdf;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      *
-     * @ORM\Column(name="date_livraison", type="date", nullable=true)
+     * @ORM\Column(name="date_livraison", type="string", nullable=true)
      */
     private $dateLivraison;
 
     /**
-     * @var \Utilisateur
+     * @var string|null
      *
-     * @ORM\ManyToOne(targetEntity="Utilisateur")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_utilisateur", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="prix_total", type="string", length=255, nullable=true)
      */
-    private $idUtilisateur;
+    private $prixTotal;
 
     /**
-     * @var \Adresse
+     * @var string|null
      *
-     * @ORM\ManyToOne(targetEntity="Adresse")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_adresse", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="numero_commande", type="string", length=255, nullable=true)
      */
-    private $idAdresse;
+    private $numeroCommande;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDateCde(): ?\DateTimeInterface
+    public function getDateCde(): ?string
     {
         return $this->dateCde;
     }
 
-    public function setDateCde(?\DateTimeInterface $dateCde): self
+    public function setDateCde(?string $dateCde): self
     {
         $this->dateCde = $dateCde;
 
@@ -91,41 +88,40 @@ class Commande
         return $this;
     }
 
-    public function getDateLivraison(): ?\DateTimeInterface
+    public function getPrixTotal(): ?string
+    {
+        return $this->prixTotal;
+    }
+
+    public function setPrixTotal(?string $prixTotal): self
+    {
+        $this->prixTotal = $prixTotal;
+
+        return $this;
+    }
+
+    public function getNumeroCommande(): ?string
+    {
+        return $this->numeroCommande;
+    }
+
+    public function setNumeroCommande(?string $numeroCommande): self
+    {
+        $this->numeroCommande = $numeroCommande;
+
+        return $this;
+    }
+
+    public function getDateLivraison(): ?string
     {
         return $this->dateLivraison;
     }
 
-    public function setDateLivraison(?\DateTimeInterface $dateLivraison): self
+    public function setDateLivraison(?string $dateLivraison): self
     {
         $this->dateLivraison = $dateLivraison;
 
         return $this;
     }
-
-    public function getIdUtilisateur(): ?Utilisateur
-    {
-        return $this->idUtilisateur;
-    }
-
-    public function setIdUtilisateur(?Utilisateur $idUtilisateur): self
-    {
-        $this->idUtilisateur = $idUtilisateur;
-
-        return $this;
-    }
-
-    public function getIdAdresse(): ?Adresse
-    {
-        return $this->idAdresse;
-    }
-
-    public function setIdAdresse(?Adresse $idAdresse): self
-    {
-        $this->idAdresse = $idAdresse;
-
-        return $this;
-    }
-
-
 }
+
