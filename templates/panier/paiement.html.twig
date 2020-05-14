@@ -1,9 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'FIGURINA' %}
+{% block title 'FIGURINA | Paiement' %}
 
 {% block body %}
-
+    <style>
+        label {
+            font-weight: bold;
+        }
+        th {
+            color:#FFFFFF;
+        }
+    </style>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="jumbotron">
             <div class="container text-center">
@@ -24,9 +31,13 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="jumbotron">
+                            <div class="text-center">
+                                <h5 style="font-weight: bold">Tableau Produit(s)</h5>
+                            </div>
+                            <br>
                             {% if items | length > 0 %}
                                 <table class="table">
-                                    <thead>
+                                    <thead style="background-color: #0a0a0a">
                                     <tr>
                                         <th>Image</th>
                                         <th>Nom</th>
@@ -52,13 +63,17 @@
                                     </tbody>
                                 </table>
                             {% else %}
-                                <p>Surprise, c'est vide !</p>
+                                <p>Votre panier est vide.</p>
                             {% endif %}
                         </div>
                         <a href="{{ path('commande', {'id': item.produit.id}) }}" style="float:left;">< revenir à la page des livraisons</a>
                     </div>
                     <div class="col-md-4">
                         <div class="jumbotron">
+                            <div class="text-center">
+                                <h5 style="font-weight: bold">Récapitulatif de la commande</h5>
+                            </div>
+                            <br>
                             <strong>Nom & Prénom :&nbsp;</strong>{{ app.user.nom }} {{ app.user.prenom }}<br><br>
                             <strong>Email :&nbsp;</strong>{{ app.user.email }}<br><br>
                             <strong style="float: left;">Adresse de livraison :&nbsp;</strong>
@@ -75,7 +90,7 @@
                             <form method="post">
                                 <fieldset class="credit-card-group">
                                     <div class="text-center">
-                                        <legend>Informations bancaires</legend>
+                                        <h5 style="font-weight: bold">Informations bancaires</h5>
                                     </div>
                                     <br>
                                     <label for="card-number">Numéro de la carte</label>
@@ -118,7 +133,7 @@
                                 </fieldset>
                                 <br>
                                 <div class="text-center">
-                                    <input type="submit" id="submit-button" formaction="{{ path('apresPaiement', {'id': item.produit.id}) }}" class="btn btn-orange" value="Payer {{ total }} €">
+                                    <input type="submit" id="submit-button" formaction="{{ path('apresPaiement', {'id': item.produit.id}) }}" class="btn btn-grey" value="Payer {{ total }} €">
                                 </div>
                             </form>
                         </div>
@@ -129,7 +144,7 @@
     {% else %}
         <div class="jumbotron">
             <div class="container text-center">
-                <h3>Oups, il n'y a rien par ici. Veuillez vous connectez avant d'accéder au panier : <a href="{{ path('app_login') }}">Connexion </a></h3>
+                <h3>Veuillez vous connectez avant d'accéder au panier : <a href="{{ path('app_login') }}">Connexion </a></h3>
             </div>
         </div>
     {% endif %}

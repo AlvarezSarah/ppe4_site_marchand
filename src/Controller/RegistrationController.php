@@ -63,7 +63,7 @@ class RegistrationController extends AbstractController
             $token = $user->getConfirmationToken();
             $email = $user->getEmail();
             $username = $user->getUsername();
-            $message = (new \Swift_Message('TRINTAR.COM : Mail de confirmation'))
+            $message = (new \Swift_Message('FIGURINA : Mail de confirmation'))
                 ->setFrom('test42@gmail.com')
                 ->setTo($email)
                 ->setBody(

@@ -1,9 +1,19 @@
-<h3>Bonjour {{ app.user.nom }} {{ app.user.prenom }}</h3>
+<h3>Bonjour {{ app.user.nom }} {{ app.user.prenom }},</h3>
 
-Nous vous remercions pour votre confiance et nous vous informons pour votre facture n°{{ token }} d'un montant de {{ total }} € est disponible en pièce jointe.
+<p>
+    Votre achat a bien été prise en compte. Nous vous remercions de la confiance que vous accordez à notre entreprise. Nous sommes impatients de vous revoir sur notre site !
+</p>
+<p>
+    Récapitulatif de votre commande :
+    <br>
+    Numéro de facture : {{ token }}
+    <br>
+    Montant total : {{ total }} €
+</p>
+<p> Vous pouvez consulter votre facture directement dans la pièce jointe à ce mail.</p>
 <br>
 <br>
-Merci et à très bientôt sur FIGURINA !
-<h4>L'équipe de FIGURINA</h4>
+<p>A très bientôt !</p>
+<h4>L'équipe FIGURINA</h4>
 
 

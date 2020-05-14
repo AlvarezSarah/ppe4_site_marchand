@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'FIGURINA' %}
+{% block title 'FIGURINA | Panier' %}
 
 {% block body %}
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="jumbotron">
-            <div class="container text-center">
-                <p style="font-weight: bold; font-size : 2rem;">Récapitulatif de mon panier</p><br><br><br>
+            <div class="container ">
+                <p style="font-weight: bold; font-size : 2rem; ">Mon panier</p><br>
+
             </div>
             <div class="container">
                 <div class="col-md-2"></div>
@@ -26,6 +27,25 @@
                         <div class="jumbotron">
                             {% if items | length > 0 %}
                                 <table class="table">
+                                    <thead style="background-color: #0a0a0a">
+                                    <style>
+                                        th {
+                                          color:#FFFFFF;
+                                        }
+                                        a {
+                                            color: #222222;
+                                        }
+                                    </style>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Nom Figurines</th>
+                                        <th>Quantité</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Prix</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
                                     <tbody>
                                     {% for item in items %}
                                         <tr>
@@ -39,11 +59,11 @@
                                             <td style="font-weight: bold;">{{ item.produit.libelle }}</td>
                                             <td>{{ item.quantity }}</td>
                                             <td>
-                                                <a href="{{ path('panier.unAjout', {'id': item.produit.id}) }}" style="float: left;" class="btn btn-green btn-sm"> +
+                                                <a href="{{ path('panier.unAjout', {'id': item.produit.id}) }}" style="float: left;" class="btn btn-black btn-sm"> +
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{ path('panier.uneSuppresion', {'id': item.produit.id}) }}" style="float: left;" class="btn btn-primary btn-sm"> -
+                                                <a href="{{ path('panier.uneSuppresion', {'id': item.produit.id}) }}" style="float: left;" class="btn btn-grey btn-sm"> -
                                                 </a>
                                             </td>
                                             <td>{{ item.produit.prixht * item.quantity }} €</td>
@@ -64,14 +84,14 @@
                     </div>
                     <div class="col-md-4">
                         <div class="jumbotron">
-                            <p style="font-weight: bold; float: left;">Livraison : </p>
-                            <p style="float: right">{{ livraison }} €</p><br><br>
-                            <p style="font-weight: bold; float: left;">Total : </p>
-                            <p style="float: right;">{{ total }} €</p><br><br>
+                            <p style="font-weight: bold; text-align: center">Livraison : </p>
+                            <p style="text-align: center">{{ livraison }} €</p><br>
+                            <p style="font-weight: bold; text-align: center">Total : </p>
+                            <p style="text-align: center">{{ total }} €</p><br><br>
                             <div class="text-center">
                                 {% if items | length > 0 %}
                                     <td>
-                                        <a href="{{ path('commande', {'id': item.produit.id})}}" class="btn btn-green">Poursuivre ma commande</a>
+                                        <a href="{{ path('commande', {'id': item.produit.id})}}" class="btn btn-grey">Commander</a>
                                     </td>
                                 {% endif %}
                             </div>
