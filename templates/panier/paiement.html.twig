@@ -13,8 +13,10 @@
     </style>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="jumbotron">
-            <div class="container text-center">
-                <p style="font-weight: bold; font-size : 2rem;">Paiement</p><br><br><br>
+            <div class="container-fluid text-center">
+                <div class="jumbotron" style="background-color: #0a0a0a">
+                <h3 style="font-weight: bold; color: #FFFFFF">Paiement</h3>
+                </div>
             </div>
             <div class="container">
                 <div class="col-md-2"></div>
@@ -32,7 +34,9 @@
                     <div class="col-md-5">
                         <div class="jumbotron">
                             <div class="text-center">
-                                <h5 style="font-weight: bold">Tableau Produit(s)</h5>
+                                <h5 style="font-weight: bold;">Tableau Produit(s)</h5>
+
+
                             </div>
                             <br>
                             {% if items | length > 0 %}
@@ -71,10 +75,12 @@
                     <div class="col-md-4">
                         <div class="jumbotron">
                             <div class="text-center">
-                                <h5 style="font-weight: bold">Récapitulatif de la commande</h5>
+                                <div class="jumbotron" style="background-color: #0a0a0a; padding: 1rem 1rem">
+                                <h5 style="font-weight: bold; color: #FFFFFF">Récapitulatif de la commande</h5>
+                                </div>
                             </div>
                             <br>
-                            <strong>Nom & Prénom :&nbsp;</strong>{{ app.user.nom }} {{ app.user.prenom }}<br><br>
+                            <strong>Nom | Prénom :&nbsp;</strong>{{ app.user.nom }} | {{ app.user.prenom }}<br><br>
                             <strong>Email :&nbsp;</strong>{{ app.user.email }}<br><br>
                             <strong style="float: left;">Adresse de livraison :&nbsp;</strong>
                             {% if adresse | length > 0 %}<p>{{ adresse }}</p>{% endif %}
@@ -82,7 +88,7 @@
                             <strong>Date commande :&nbsp;</strong>{{ date }}<br><br>
                             <strong>Date livraison :&nbsp;</strong>{{ dateLivraison }}<br><br>
                             <strong>Prix livraison :&nbsp;</strong>{{ livraison }} €<br><br>
-                            <strong>Total :&nbsp;</strong>{{ total }} €<br><br>
+                            <strong>Total :&nbsp;{{ total }} € </strong><br><br>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -90,12 +96,14 @@
                             <form method="post">
                                 <fieldset class="credit-card-group">
                                     <div class="text-center">
-                                        <h5 style="font-weight: bold">Informations bancaires</h5>
+                                        <div class="jumbotron" style="background-color: #0a0a0a; padding: 1rem 1rem">
+                                        <h5 style="font-weight: bold; color: #FFFFFF">Informations bancaires</h5>
+                                        </div>
                                     </div>
                                     <br>
                                     <label for="card-number">Numéro de la carte</label>
                                     <br>
-                                    <input id="txtCardNumber" class="card-number" name="card-number" placeholder="0123 4567 8901 2345" minlength="0000 0000 0000 0000" required>
+                                    <input id="txtCardNumber" class="card-number" name="card-number" placeholder="0123 4567 8910 1213" minlength="0000 0000 0000 0000" required>
                                     <br>
                                     <br>
                                     <label for="card-number">Titulaire de la carte</label><br>

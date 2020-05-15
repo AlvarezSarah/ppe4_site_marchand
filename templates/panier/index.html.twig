@@ -6,9 +6,10 @@
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="jumbotron">
-            <div class="container ">
-                <p style="font-weight: bold; font-size : 2rem; ">Mon panier</p><br>
-
+            <div class="container-fluid text-center ">
+                <div class="jumbotron"  style="background-color: #0a0a0a">
+                <h3 style="font-weight: bold;  color: #FFFFFF; margin: unset ">Mon panier</h3><br>
+                </div>
             </div>
             <div class="container">
                 <div class="col-md-2"></div>
@@ -77,13 +78,17 @@
                                     </tbody>
                                 </table>
                             {% else %}
-                                <p>Surprise, c'est vide !</p>
+                                <p>Votre panier est vide.</p>
+
                             {% endif %}
                         </div>
                         <a href="{{ path('produit_index') }}" style="float:left;">< continuer mes achats</a>
                     </div>
                     <div class="col-md-4">
                         <div class="jumbotron">
+                            <div class="jumbotron text-center"  style="background-color: #0a0a0a; padding: 1rem 1rem">
+                                <h5 style="font-weight: bold;  color: #FFFFFF; margin: unset ">Total</h5>
+                            </div>
                             <p style="font-weight: bold; text-align: center">Livraison : </p>
                             <p style="text-align: center">{{ livraison }} €</p><br>
                             <p style="font-weight: bold; text-align: center">Total : </p>
@@ -104,7 +109,7 @@
     {% else %}
         <div class="jumbotron">
             <div class="container text-center">
-                <h3>Oups, il n'y a rien par ici. Veuillez vous connectez avant d'accéder au panier : <a href="{{ path('app_login') }}">Connexion </a></h3>
+                <h3>Vous n'êtes pas connecté, veuillez vous connecter pour accéder à votre panier : <a href="{{ path('app_login') }}">Connexion </a></h3>
             </div>
         </div>
     {% endif %}

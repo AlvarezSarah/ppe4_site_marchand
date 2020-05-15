@@ -10,9 +10,15 @@
         }
     </style>
 
-    <div class="jumbotron">
-        <div class="container text-center">
-            <p style="font-weight: bold; font-size : 2rem;">Livraison</p><br><br><br>
+    <div class="jumbotron" >
+        <div class="container-fluid text-center">
+            <div class="jumbotron"  style="background-color: #0a0a0a">
+
+
+            <h3 style="font-weight: bold; font-size : 2rem; color: #FFFFFF">LIVRAISON</h3>
+
+
+            </div>
         </div>
         <div class="container">
             <div class="col-md-2"></div>
@@ -27,26 +33,36 @@
         </div>
         <div class="col-md-12">
             <div class="row">
+
                 <div class="col-md-6">
-                    <div class="jumbotron text-center">
                         <div class="text-center">
-                            <h5 style="font-weight: bold;">Information de facturation</h5>
+                            <div class="jumbotron" style="background-color: #0a0a0a">
+                            <h5 style="font-weight: bold; text-align: center; color: #FFFFFF">Information de facturation</h5>
+                            </div>
                         </div>
-                        <br>
-                        <strong>Nom & Prénom :&nbsp;</strong><br>{{ app.user.nom }} {{ app.user.prenom }}<br><br>
-                        <strong >Adresse de livraison :&nbsp;</strong>
+
+                    <div class="jumbotron">
+                        <strong>Nom | Prénom &nbsp;</strong><br>{{ app.user.nom }} | {{ app.user.prenom }}<br><br>
+                        <strong >Adresse (livraison) :&nbsp;<h6>(vous devez en chosir une avant de continuez)</h6></strong>
                         {% if adresse | length > 0 %}<p>{{ adresse }}</p>{% endif %}
-                        <br><br>
-                        <strong>Adresse de facturation :&nbsp;</strong><br>{% if app.user.adresse | length > 0 %}<p>{{ app.user.adresse }}</p>{% else %}<p style="color: red;">Veuillez inscrire votre adresse sur votre <a href="{{ path ('user.profil')}}">profil</a> pour continuer</p>{% endif %}<br><br>
+                        <br>
+                        <strong>Adresse (facturation) :&nbsp;</strong><br>{% if app.user.adresse | length > 0 %}<p>{{ app.user.adresse }}</p>{% else %}<p style="color: red;">Veuillez inscrire votre adresse sur votre <a href="{{ path ('user.profil')}}">profil</a> pour continuer</p>{% endif %}<br><br>
                         <strong>Email de facturation :<br></strong>{{ app.user.email }}
                     </div>
-                    <a href="{{ path('panier') }}" style="float:left;">< revenir au panier</a>
+
                 </div>
-                <div class="col-md-6">
+
+
+                <div class="col-md-5">
                     <div class="jumbotron">
                         <div class="text-center">
-                            <h5 style="font-weight: bold;">Adresse de livraison</h5>
-                            <br>
+
+                                <div class="jumbotron" style="background-color: #0a0a0a">
+
+                                    <h5 style="font-weight: bold; color: #FFFFFF">Adresse de livraison</h5>
+
+                                </div>
+
 
                             {% for magasin in magasins %}
                                 <a style="font-weight: bold">{{ magasin.nom }} </a> : <a> {{ magasin.adresse }}</a>
@@ -61,10 +77,12 @@
                         {% if adresse | length > 0 %}
                             <div class="jumbotron">
                                 <div class="text-center">
-                                    <p style="font-weight: bold;">Régler votre commande</p>
+                                    <div class="jumbotron"  style="background-color: #0a0a0a; padding: 1rem 1rem ">
+                                    <p style="font-weight: bold; color: #FFFFFF; margin: unset">Régler votre commande</p>
+                                    </div>
                                     <div class="text-center">
                                         <td>
-                                            <a href="{{ path('paiement', {'id': item.produit.id}) }}" class="btn btn-grey">Poursuivre ma commande</a>
+                                            <a href="{{ path('paiement', {'id': item.produit.id}) }}" class="btn btn-grey" style="font-weight: bold">Poursuivre ma commande</a>
                                         </td>
                                     </div>
                                 </div>
@@ -74,6 +92,7 @@
                 </div>
             </div>
         </div>
+        <a href="{{ path('panier') }}" style="float:left;">< revenir au panier</a>
     </div>
 {% endblock %}
 

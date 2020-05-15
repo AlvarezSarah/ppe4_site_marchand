@@ -6,9 +6,14 @@
     <div class="jumbotron">
         <div class="container">
             <div class="text-center">
-                <h1>ADMINISTRATION <br> UTILISATEURS</h1>
+                <div class="jumbotron" style="background-color: #0a0a0a">
+                <h2 style="color: #FFFFFF; font-weight: bold">ADMINISTRATION <br> UTILISATEURS</h2>
+                </div>
             </div>
+            <br>
+            <br>
         </div>
+
         <br>
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
@@ -16,7 +21,12 @@
             </div>
         {% endfor %}
         <table class="table">
-            <thead>
+            <style>
+                th {
+                    color:#FFFFFF;
+                }
+            </style>
+            <thead style="background-color: #0a0a0a">
             <tr>
                 <th>actions</th>
                 <th>Id</th>
@@ -26,13 +36,14 @@
                 <th>Telephone</th>
                 <th>Date de naissance</th>
                 <th>Rôle</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for utilisateur in utilisateurs %}
                 <tr>
                     <td>
-                        <a href="{{ path('admin.utilisateur.edit', {id : utilisateur.id}) }}" class="btn btn-secondary">Editer</a>
+                        <a href="{{ path('admin.utilisateur.edit', {id : utilisateur.id}) }}" class="btn btn-grey">Editer</a>
                         <form method="post" action="{{ path('admin.utilisateur.delete', {id: utilisateur.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr de vouloir supprimer ?')">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.id) }}">
@@ -57,7 +68,7 @@
             </tbody>
         </table>
         <div class="text-right">
-            <a href="{{ path('admin.utilisateur.new') }}" class="btn btn-primary">Créer une nouvel utilisateur</a>
+            <a href="{{ path('admin.utilisateur.new') }}" class="btn btn-black">Créer une nouvel utilisateur</a>
         </div>
     </div>
 {% endblock %}

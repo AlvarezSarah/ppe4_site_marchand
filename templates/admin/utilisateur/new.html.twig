@@ -3,18 +3,13 @@
 {% block title 'Administration | Création Utilisateurs' %}
 
 {% block body %}
-    <div class="jumbotron">
-        <div class="container">
-            <div class="text-center">
-                <h1>Création des utilisateurs</h1>
-            </div>
-        </div>
-    </div>
-    <br>
     <div class="container mt-4">
+        <div class="jumbotron text-center" style="background-color: #0a0a0a; padding: 1rem 1rem">
+        <h2  style="color: #FFFFFF; font-weight: bold">Création des utilisateurs</h2>
+        </div>
         {{ include ('admin/utilisateur/_form.html.twig', {button: 'Enregistrer'}) }}
     </div>
-
+    <br>
 {% endblock %}
 
 

@@ -1,17 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'FIGURIANE | Modification profil' %}
+{% block title 'FIGURINA | Modification profil' %}
 
 {% block body %}
 
-    <div class="jumbotron">
-        <div class="container">
-            <div class="text-center">
-                <h1>MODIFICATION DE VOS INFORMATIONS</h1>
-            </div>
-        </div>
-    </div>
+
     <div class="container mt-4">
+        <div class="jumbotron text-center" style="background-color: #0a0a0a">
+            <h2 style="color: #FFFFFF; font-weight: bold">MODIFICATION DE VOS INFORMATIONS</h2>
+        </div>
         {{ include ('site/_form.html.twig', {form: form, button: 'Enregistrer'}) }}
     </div>
 {% endblock %}

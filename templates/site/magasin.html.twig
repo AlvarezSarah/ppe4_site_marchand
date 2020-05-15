@@ -4,29 +4,35 @@
 
 {% block body %}
     <br>
-    <div class="container">
-        {{ form_start(form) }}
-        <div class="form-row align-items-end">
-            <div class="col">
-                {{ form_row(form.nom) }}
-            </div>
-            &nbsp;<div class="col-md-4">
-                <div class="form-group">
-                    <input type="text" value="" id="search_address" class="form-control" placeholder="Adresse"/>
-                </div>
-            </div>
-            <div class="col">
-                {{ form_row(form.distance) }}
-            </div>
-
-
-            <div class="col">
-                <button class="btn btn-primary">Rechercher</button>
-            </div>
-        </div>
-        {{ form_end(form) }}
+    <div class="jumbotron" style="background-color: #0a0a0a">
+        <h2 style="color: #FFFFFF; text-align: center; font-weight: bold">
+            MAGASINS
+        </h2>
     </div>
     <div class="jumbotron">
+        <div class="container">
+            {{ form_start(form) }}
+            <div class="form-row align-items-end">
+                <div class="col">
+                    {{ form_row(form.nom) }}
+                </div>
+                &nbsp;<div class="col-md-4">
+                    <div class="form-group">
+                        <input type="text" value="" id="search_address" class="form-control" placeholder="Adresse"/>
+                    </div>
+                </div>
+                <div class="col">
+                    {{ form_row(form.distance) }}
+                </div>
+
+
+                <div class="col">
+                    <button class="btn btn-grey">Rechercher</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+        <br>
         <div class="container">
             <div class="row">
                 {% for magasin in magasins %}

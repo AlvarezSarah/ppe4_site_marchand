@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title ' Administration: modifier' %}
+{% block title ' Administration | Modifier' %}
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Modifier un produit</h1>
+        <div class="jumbotron text-center" style="background-color: #0a0a0a; padding: 1rem 1rem">
+        <h2 style="color: #FFFFFF; font-weight: bold">Modifier un produit</h2>
+        </div>
         {{ include ('admin/produit/_form.html.twig', {button: 'Enregistrer'}) }}
     </div>
 

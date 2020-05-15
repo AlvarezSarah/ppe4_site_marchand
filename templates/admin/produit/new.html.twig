@@ -4,7 +4,9 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Création d'un nouveau produit</h1>
+        <div class="jumbotron text-center" style="background-color: #0a0a0a; padding: 1rem 1rem">
+        <h2 style="color: #FFFFFF; font-weight: bold">Création d'un nouveau produit</h2>
+        </div>
         {{ include ('admin/produit/_form.html.twig', {button: 'Enregistrer'}) }}
     </div>
 

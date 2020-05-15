@@ -6,26 +6,35 @@
 
 {% block body %}
     <br>
-    <div class="container">
-        {{ form_start(form) }}
-        <div class="form-row">
-            <div class="col-md-3">
-                {{ form_row(form.licences) }}
+    <div class="jumbotron text-center" style="background-color: #0a0a0a">
+        <h3  style="color: #FFFFFF; font-weight: bold">
+            PRODUITS
+        </h3>
+    </div>
+
+    <div class="jumbotron">
+        <div class="container">
+            <div class="col-md-12">
+            {{ form_start(form) }}
+            <div class="form-row">
+                <div class="col-md-4">
+                    {{ form_row(form.licences) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.libelle) }}
+                    <center><button class="btn btn-grey text-center">Rechercher</button></center>
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.marques) }}
+                </div>
+                &nbsp;
+                <div class="col-md-12" style="text-align: center">
+
+                </div>
             </div>
-            <div class="col-md-3">
-                {{ form_row(form.libelle) }}
-            </div>
-            <div class="col-md-3">
-                {{ form_row(form.marques) }}
-            </div>
-            &nbsp;
-            <div class="col-md-3">
-                <button class="btn btn-primary">Rechercher</button>
+            {{ form_end(form) }}
             </div>
         </div>
-        {{ form_end(form) }}
-    </div>
-    <div class="jumbotron">
         <div class="container">
             <div class="row">
                 {% for produit in produits %}

@@ -4,8 +4,10 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Création d'une nouvelle marque</h1>
+        <div class="jumbotron text-center" style="background-color: #0a0a0a; padding: 1rem 1rem">
+        <h2 style="color: #FFFFFF; font-weight: bold">Création d'une nouvelle marque</h2>
+        </div>
         {{ include ('admin/marque/_form.html.twig', {button: 'Enregistrer'}) }}
     </div>
-
+    <br>
 {% endblock %}

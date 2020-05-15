@@ -60,7 +60,7 @@
                     {% if produit.stock == 0 %}
 
                     {% else %}
-                        <a href="{{ path ('panier.add', {'id': produit.id}) }}" style="float: left" class="btn btn-secondary">Ajouter au panier</a>
+                        <a href="{{ path ('panier.add', {'id': produit.id}) }}" style="float: left" class="btn btn-grey">Ajouter au panier</a>
                     {% endif %}
                 {% else %}
                     <p>Pour commander un produit, veuillez vous connecter : <a href="{{ path ('app_login')}}">Se connecter</a></p>
@@ -73,9 +73,9 @@
     <div class="jumbotron">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-3"></div>
+
                 <div class="col-md-3">
-                    <a href="{{ path ('produit_index')}}" class="btn btn-primary">Revenir à la page produit</a>
+                    <a href="{{ path ('produit_index')}}" class="btn btn-outline-black"> < Revenir à la page produit</a>
                 </div>
                <div class="col-md-3"></div>
             </div>

@@ -1,15 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Administration | Modification' %}
+
 {% block body %}
-    <div class="jumbotron">
-        <div class="container">
-            <div class="text-center">
-                <h1>MODIFICATION DES MARQUES</h1>
-            </div>
-        </div>
+   <div class="container mt-4">
+    <div class="jumbotron text-center" style="background-color: #0a0a0a; padding: 1rem 1rem">
+        <h2 style="color: #FFFFFF; font-weight: bold">MODIFICATION DES MARQUES</h2>
     </div>
-    <div class="container mt-4">
         {{ include ('admin/marque/_form.html.twig', {form: form, button: 'Modifier une categorie'}) }}
     </div>
+    <br>
 
 {% endblock %}

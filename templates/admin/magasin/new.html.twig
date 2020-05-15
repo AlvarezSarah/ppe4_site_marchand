@@ -4,8 +4,11 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Créer un nouveau magasin</h1>
+        <div class="jumbotron text-center" style="background-color: #0a0a0a; padding: 1rem 1rem">
+        <h2 style="color: #FFFFFF; font-weight: bold">Créer un nouveau magasin</h2>
+        </div>
         {{ include ('admin/magasin/_form.html.twig', {button: 'Enregistrer'}) }}
+
     </div>
 
 {% endblock %}

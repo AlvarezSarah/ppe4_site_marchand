@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'TRINTAR.com : Administration - modification' %}
+{% block title 'Administration | Modification' %}
 
 {% block body %}
-    <div class="jumbotron">
-        <div class="container">
-            <div class="text-center">
-                <h1>MODIFICATION DES UTILISATEURS</h1>
-            </div>
-        </div>
-    </div>
     <div class="container mt-4">
+        <div class="jumbotron text-center" style="background-color: #0a0a0a; padding: 1rem 1rem">
+            <h2 style="color: #FFFFFF; font-weight: bold">MODIFICATION DES UTILISATEURS</h2>
+        </div>
         {{ include ('admin/utilisateur/_form.html.twig', {form: form, button: 'Modifier un utilisateur'}) }}
     </div>
 

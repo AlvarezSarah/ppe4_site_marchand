@@ -44,8 +44,6 @@
                 <strong>Courriel :&nbsp;</strong> {{ magasin.courriel | nl2br }}
             </div>
             <br>
-
-
             {#            <div class="row">#}
 {#                <strong>Option(s) du magasin :&nbsp;</strong><br>{% for optionMagasin in magasin.idOptionMagasin %} {{ optionMagasin.libelle | nl2br }},{% endfor %}#}
 {#            </div>#}
@@ -68,12 +66,11 @@
     <div class="jumbotron">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-3"></div>
                 <div class="col-md-3">
-                    <a href="{{ path ('magasin')}}" class="btn btn-primary">Revenir à la page produit</a>
+                    <a href="{{ path ('magasin')}}" class="btn btn-outline-black"> < Revenir à la page produit</a>
                 </div>
                 <div class="col-md-3">
-                    <a href="" class="btn btn-secondary">Commander un produit</a>
+                    <a href="" class="btn btn-grey">Commander un produit</a>
                 </div>
                 <div class="col-md-3"></div>
             </div>

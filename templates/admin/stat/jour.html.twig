@@ -6,7 +6,9 @@
     <div class="jumbotron">
         <div class="container">
             <div class="text-center">
-                <h1>STATISTIQUE PAR JOUR</h1>
+                <div class="jumbotron" style="background-color: #0a0a0a">
+                <h2 style="color: #FFFFFF; font-weight: bold">STATISTIQUE PAR JOUR</h2>
+                </div>
             </div>
         </div>
         <br>
@@ -20,7 +22,12 @@
             <div class="row">
                 <div class="col-md-8">
                     <table class="table">
-                        <thead>
+                        <style>
+                            th {
+                                color:#FFFFFF;
+                            }
+                        </style>
+                        <thead style="background-color: #0a0a0a">
                         <tr>
                             <th>Personne inscrite</th>
                             <th>Commande effectuée</th>
@@ -43,11 +50,13 @@
                 <div class="col-md-4">
                     <div class="jumbotron">
                         <div class="text-center">
-                            <p>FILTRE</p>
+                            <div class="jumbotron" style="background-color: #0a0a0a; padding: 1rem 1rem">
+                            <h5 style="color: #FFFFFF; font-weight: bold">FILTRE</h5>
+                            </div>
                             <br>
-                            <a href="{{ path ('admin.stat.mois')}}" class="btn btn-secondary">Stat / Mois</a>
-                            <a href="{{ path ('admin.stat.semaine')}}" class="btn btn-secondary">Stat / Semaine</a>
-                            <a href="{{ path ('admin.stat.jour')}}" class="btn btn-secondary">Stat / Jours</a>
+                            <a href="{{ path ('admin.stat.mois')}}" class="btn btn-grey">Stat / Mois</a>
+                            <a href="{{ path ('admin.stat.semaine')}}" class="btn btn-grey">Stat / Semaine</a>
+                            <a href="{{ path ('admin.stat.jour')}}" class="btn btn-grey">Stat / Jours</a>
                         </div>
                     </div>
                 </div>

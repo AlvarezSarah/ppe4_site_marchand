@@ -9,11 +9,17 @@
             <div class="col-md-6">
                 <div class="jumbotron">
                     <div class="container text-center">
-                        <p style="font-weight: bold; font-size : 2rem;">PAIEMENT TERMINE</p><br><br>
+                        <div class="jumbotron" style="background-color: #0a0a0a">
+                        <h3 style="font-weight: bold; color: #FFFFFF">Paiement terminé</h3>
+                        </div>
                     </div>
-                    <p>{{ app.user.nom }} {{ app.user.prenom }}, votre commande à hauteur de {{ total }} euros à été effectuée avec succès.<br>
-                        Vous allez recevoir un email sur votre courriel {{ app.user.email }} confirmant la commande avec la facture en pièce jointe.<br>
-                        Vous pouvez continuer votre visite du site sur : <a href="{{ url('produit_index') }}">Retour à la page produit</a>.
+                    <p> Votre commande a été effectuée avec succès, <strong>{{ app.user.nom }} {{ app.user.prenom }} </strong> ! <br><br>
+                        Votre achats est d'un total de <strong>{{ total }} €</strong>.
+                        Vous allez recevoir un email présentant votre facture au formats pdf. <br>
+                        Ce mail seras envoyer a cette adresse :<strong>{{ app.user.email }}</strong> <br>
+                        Lorsque vous avez reçus ce mail, celui-ci confirme votre achat. <br><br>
+                        A bientôt sur FIGURINA ! <br><br>
+                        Continuez mon achat : <a href="{{ url('produit_index') }}">Retour à la page produit</a>.
                     </p>
                     <br>
                     <div class="container">
